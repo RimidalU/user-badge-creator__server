@@ -5,7 +5,8 @@ const PORT = process.env.PORT || 5000;
 
 async function bootstrap() {
   try {
-    const app = await NestFactory.create(AppModule);
+    const app = await NestFactory.create(AppModule, { cors: false });
+    app.enableCors({ credentials: true, origin: true });
     await app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
   } catch (error) {
     console.log(error);

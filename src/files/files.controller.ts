@@ -6,6 +6,10 @@ import {
   Param,
   Delete,
   UseInterceptors,
+  UploadedFile,
+  ParseFilePipe,
+  MaxFileSizeValidator,
+  FileTypeValidator,
 } from '@nestjs/common';
 import { FilesService } from './files.service';
 import { CreateFileDto } from './dto/create-file.dto';
@@ -36,8 +40,22 @@ export class FilesController {
       },
     },
   })
-  create(@Body() createFileDto: CreateFileDto) {
-    return this.filesService.create(createFileDto);
+  create(
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({
+            maxSize: 1024 * 1024 * 5, // 5mb
+          }),
+          new FileTypeValidator({
+            fileType: /(jpg|jpeg|png)$/,
+          }),
+        ],
+      }),
+    )
+    file: Express.Multer.File,
+  ) {
+    return file;
   }
 
   @Get(':id')

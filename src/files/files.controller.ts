@@ -3,17 +3,14 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   UseInterceptors,
-  UploadedFile,
 } from '@nestjs/common';
 import { FilesService } from './files.service';
 import { CreateFileDto } from './dto/create-file.dto';
-import { UpdateFileDto } from './dto/update-file.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { avatarStorage } from './storage';
+import { filesStorage } from './storage';
 import { ApiTags } from '@nestjs/swagger';
 
 @Controller('files')
@@ -24,7 +21,7 @@ export class FilesController {
   @Post()
   @UseInterceptors(
     FileInterceptor('file', {
-      storage: avatarStorage,
+      storage: filesStorage,
     }),
   )
   create(@Body() createFileDto: CreateFileDto) {

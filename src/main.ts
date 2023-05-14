@@ -1,7 +1,9 @@
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as express from 'express';
 
 import { AppModule } from './app.module';
+import { join } from 'path';
 
 const PORT = process.env.PORT || 5000;
 
@@ -9,6 +11,8 @@ async function bootstrap() {
   try {
     const app = await NestFactory.create(AppModule, { cors: false });
     app.enableCors({ credentials: true, origin: true });
+
+    app.use('/uploads', express.static(join(__dirname, '..', '/uploads')));
 
     const config = new DocumentBuilder()
       .setTitle('User badge creator')

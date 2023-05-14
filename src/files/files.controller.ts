@@ -11,7 +11,7 @@ import { FilesService } from './files.service';
 import { CreateFileDto } from './dto/create-file.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { filesStorage } from './storage';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 
 @Controller('files')
 @ApiTags('files')
@@ -24,6 +24,18 @@ export class FilesController {
       storage: filesStorage,
     }),
   )
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
   create(@Body() createFileDto: CreateFileDto) {
     return this.filesService.create(createFileDto);
   }

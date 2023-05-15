@@ -2,6 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
+import { join } from 'path';
+import { unlink } from 'fs';
+import { promisify } from 'util';
+import { error } from 'console';
+
+const unlinkAsync = promisify(unlink);
 
 @Injectable()
 export class FilesService {
@@ -15,11 +21,9 @@ export class FilesService {
     return newUser;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} file`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} file`;
+  async remove(path: string) {
+    const filePath = join(__dirname, '..', path);
+    await unlinkAsync(filePath);
+    // await unlink(filePath, error);
   }
 }

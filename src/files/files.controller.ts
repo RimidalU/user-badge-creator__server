@@ -62,13 +62,8 @@ export class FilesController {
     return this.filesService.addFile(id, file);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.filesService.findOne(+id);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.filesService.remove(+id);
+  @Delete(':path')
+  remove(@Param('path') path: string) {
+    return this.filesService.remove(`./uploads/${path}`);
   }
 }

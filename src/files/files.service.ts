@@ -1,10 +1,18 @@
 import { Injectable } from '@nestjs/common';
-import { CreateFileDto } from './dto/create-file.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { UserEntity } from 'src/users/entities/user.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class FilesService {
-  create(createFileDto: CreateFileDto) {
-    return 'This action adds a new file';
+  constructor(
+    @InjectRepository(UserEntity)
+    private repository: Repository<UserEntity>,
+  ) {}
+
+  async addFile(id: number, file: Express.Multer.File) {
+    const newUser = await this.repository.update(id, { image: file.filename });
+    return newUser;
   }
 
   findOne(id: number) {

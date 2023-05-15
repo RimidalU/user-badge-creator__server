@@ -16,6 +16,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { filesStorage } from './storage';
 import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
+import { UserId } from 'src/auth/decorators/userId.decorator';
 
 @Controller('files')
 @ApiTags('files')
@@ -56,8 +57,9 @@ export class FilesController {
       }),
     )
     file: Express.Multer.File,
+    @UserId() id: number,
   ) {
-    return file;
+    return this.filesService.addFile(id, file);
   }
 
   @Get(':id')

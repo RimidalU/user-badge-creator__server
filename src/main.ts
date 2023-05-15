@@ -18,9 +18,14 @@ async function bootstrap() {
       .setTitle('User badge creator')
       .setDescription('Badge generator from user database.')
       .setVersion('1.0')
+      .addBearerAuth()
       .build();
     const document = SwaggerModule.createDocument(app, config);
-    SwaggerModule.setup('swagger', app, document);
+    SwaggerModule.setup('swagger', app, document, {
+      swaggerOptions: {
+        persistAuthorization: true,
+      },
+    });
 
     await app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
   } catch (error) {

@@ -35,9 +35,17 @@ export class AuthService {
     if (!isValidatePassword) {
       throw new BadRequestException(AppError.USER_NOT_EXIST);
     }
-
     return {
       token: this.jwtService.sign({ userId: existUser.id }),
     };
+  }
+
+  async validateUser(email: string, password: string): Promise<any> {
+    const user = await this.usersService.findByEmail(email);
+    if (user && user.password === password) {
+      const { password, ...result } = user;
+      return result;
+    }
+    return null;
   }
 }

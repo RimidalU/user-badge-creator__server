@@ -69,7 +69,7 @@ export const badgeCreator = async (user: UserEntity) => {
         .font('Times-Italic', 5)
         .text('security Department: ', 10, 180)
         .font('Times-Bold', 7)
-        .text(user.email, 10, 190);
+        .text(`${user.lastName} ${user.firstName}`, 10, 190);
 
       doc.end();
     } catch (err) {

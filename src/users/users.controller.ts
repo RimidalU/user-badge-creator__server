@@ -13,6 +13,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { UserId } from 'src/auth/decorators/userId.decorator';
+import { GetBadgeDto } from './dto/get-badge.dto';
 
 @Controller('users')
 @ApiTags('users')
@@ -23,7 +24,6 @@ export class UsersController {
   @Post('/me')
   @UseGuards(JwtAuthGuard)
   async getMe(@UserId() id: any) {
-    console.log(id);
     return await this.usersService.findById(+id);
   }
 
@@ -44,5 +44,17 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   async remove(@Param('id') id: number) {
     return await this.usersService.remove(+id);
+  }
+
+  @Post('/badge')
+  @UseGuards(JwtAuthGuard)
+  async createBadge(@Body() dto: GetBadgeDto) {
+    return await this.usersService.createBadge(dto.email);
+  }
+
+  @Get('/badge:userId')
+  @UseGuards(JwtAuthGuard)
+  async getBadge(@Param('userId') userId: number) {
+    return await this.usersService.getBadge(userId);
   }
 }

@@ -17,4 +17,6 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
     default: '12345',
   })
   password: string;
+
+  pdf: Buffer;
 }

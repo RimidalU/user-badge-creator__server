@@ -4,6 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { Repository } from 'typeorm';
 import { UserEntity } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { badgeCreator } from 'src/common/helpers/badgeCreator';
 
 @Injectable()
 export class UsersService {
@@ -36,5 +37,38 @@ export class UsersService {
   async remove(id: number) {
     const user = await this.repository.delete(id);
     return user.affected;
+  }
+
+  async createBadge(email: string) {
+    const user = await this.findByEmail(email);
+
+    try {
+      const userBadge = await badgeCreator(user);
+      console.log(userBadge);
+
+      if (userBadge) {
+        await this.repository.update(user.id, { pdf: userBadge });
+        JSON.stringify(
+          {
+            status: true,
+          },
+          null,
+          '\t',
+        );
+      }
+    } catch (error) {
+      JSON.stringify(
+        {
+          status: false,
+          error: error.message,
+        },
+        null,
+        '\t',
+      );
+    }
+  }
+
+  async getBadge(userId: number) {
+    return [];
   }
 }

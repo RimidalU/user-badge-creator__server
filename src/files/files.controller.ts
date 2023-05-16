@@ -50,7 +50,7 @@ export class FilesController {
             maxSize: 1024 * 1024 * 5, // 5mb
           }),
           new FileTypeValidator({
-            fileType: /(jpg|jpeg|png)$/,
+            fileType: /(jpeg|png)$/,
           }),
         ],
       }),

@@ -49,8 +49,8 @@ export class UsersController {
 
   @Post('/badge')
   @UseGuards(JwtAuthGuard)
-  async createBadge(@Body() dto: GetBadgeDto) {
-    return await this.usersService.createBadge(dto.email);
+  async createBadge(@Body() dto: GetBadgeDto, @UserId() guardId: number) {
+    return await this.usersService.createBadge(dto.email, guardId);
   }
 
   @Get('/badge/:userId')

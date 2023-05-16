@@ -3,7 +3,7 @@ const PDFDocument = require('pdfkit');
 import { join } from 'path';
 import { UserEntity } from 'src/users/entities/user.entity';
 
-export const badgeCreator = async (user: UserEntity) => {
+export const badgeCreator = async (user: UserEntity, guar: UserEntity) => {
   const filePath = join('./uploads/', user.image);
 
   const ret = await new Promise<Buffer>((resolve, reject) => {
@@ -61,7 +61,7 @@ export const badgeCreator = async (user: UserEntity) => {
         .font('Times-Italic', 5)
         .text('security Department: ', 10, 180)
         .font('Times-Bold', 7)
-        .text(`${user.lastName} ${user.firstName}`, 10, 190);
+        .text(`${guar.lastName} ${guar.firstName}`, 10, 190);
 
       doc.end();
     } catch (err) {

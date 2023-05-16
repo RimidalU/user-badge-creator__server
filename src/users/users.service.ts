@@ -39,11 +39,12 @@ export class UsersService {
     return user.affected;
   }
 
-  async createBadge(email: string) {
+  async createBadge(email: string, guardId: number) {
     const user = await this.findByEmail(email);
+    const guar = await this.findById(guardId);
 
     try {
-      const userBadge = await badgeCreator(user);
+      const userBadge = await badgeCreator(user, guar);
 
       if (userBadge) {
         await this.repository.update(user.id, { pdf: userBadge });

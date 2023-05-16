@@ -5,7 +5,6 @@ import { Repository } from 'typeorm';
 import { join } from 'path';
 import { unlink } from 'fs';
 import { promisify } from 'util';
-import { error } from 'console';
 
 const unlinkAsync = promisify(unlink);
 

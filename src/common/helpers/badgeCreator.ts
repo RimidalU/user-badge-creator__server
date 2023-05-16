@@ -1,9 +1,11 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const PDFDocument = require('pdfkit');
-
+import { join } from 'path';
 import { UserEntity } from 'src/users/entities/user.entity';
 
 export const badgeCreator = async (user: UserEntity) => {
+  const filePath = join('./uploads/', user.image);
+
   const ret = await new Promise<Buffer>((resolve, reject) => {
     try {
       const doc = new PDFDocument({
@@ -30,16 +32,11 @@ export const badgeCreator = async (user: UserEntity) => {
         .font('Times-Bold')
         .text('MULTY PASS', 10, 10, { align: 'center' });
 
-      // doc.image(
-      //   'https://www.pngall.com/wp-content/uploads/13/Cute-Girls-PNG-Image-HD.png',
-      //   30,
-      //   50,
-      //   {
-      //     fit: [50, 50],
-      //     align: 'center',
-      //     valign: 'center',
-      //   },
-      // );
+      doc.image(filePath, 10, 45, {
+        fit: [120, 120],
+        align: 'center',
+        valign: 'center',
+      });
 
       doc
         .font('Times-Italic', 10)

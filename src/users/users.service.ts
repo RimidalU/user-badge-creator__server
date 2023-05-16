@@ -69,7 +69,7 @@ export class UsersService {
 
   async getBadge(userId: number) {
     const user = await this.findById(userId);
-    const userBadge = await badgeCreator(user);
+    const userBadge = user.pdf;
     return userBadge;
   }
 }

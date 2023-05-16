@@ -60,6 +60,9 @@ export class UsersController {
     @Res({ passthrough: true }) res,
   ) {
     const buffer = await this.usersService.getBadge(userId);
+    if (!buffer.length) {
+      return undefined;
+    }
     res.set({
       'Content-Type': 'application/pdf',
       'Content-Disposition': 'attachment; filename=example.pdf',

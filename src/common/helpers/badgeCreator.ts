@@ -15,11 +15,6 @@ export const badgeCreator = async (user: UserEntity) => {
           left: 10,
           right: 10,
         },
-        info: {
-          Title: 'Multy pass',
-          Author: 'author', // TODO add author
-          CreationDate: 'DD/MM/YYYY', // the date the document was created (added automatically by PDFKit)
-        },
       });
 
       const buffers = [];
@@ -35,16 +30,16 @@ export const badgeCreator = async (user: UserEntity) => {
         .font('Times-Bold')
         .text('MULTY PASS', 10, 10, { align: 'center' });
 
-      doc.image(
-        'https://www.pngall.com/wp-content/uploads/13/Cute-Girls-PNG-Image-HD.png',
-        30,
-        50,
-        {
-          fit: [50, 50],
-          align: 'center',
-          valign: 'center',
-        },
-      );
+      // doc.image(
+      //   'https://www.pngall.com/wp-content/uploads/13/Cute-Girls-PNG-Image-HD.png',
+      //   30,
+      //   50,
+      //   {
+      //     fit: [50, 50],
+      //     align: 'center',
+      //     valign: 'center',
+      //   },
+      // );
 
       doc
         .font('Times-Italic', 10)
@@ -76,7 +71,5 @@ export const badgeCreator = async (user: UserEntity) => {
       reject(`PDF generation error: ${err.message}`);
     }
   });
-  console.log(ret);
-
   return ret;
 };

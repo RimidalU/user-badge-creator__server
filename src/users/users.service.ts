@@ -44,7 +44,6 @@ export class UsersService {
 
     try {
       const userBadge = await badgeCreator(user);
-      console.log(userBadge);
 
       if (userBadge) {
         await this.repository.update(user.id, { pdf: userBadge });
@@ -69,6 +68,8 @@ export class UsersService {
   }
 
   async getBadge(userId: number) {
-    return [];
+    const user = await this.findById(userId);
+    const userBadge = await badgeCreator(user);
+    return userBadge;
   }
 }

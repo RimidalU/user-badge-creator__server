@@ -7,6 +7,7 @@ import {
   Delete,
   UseGuards,
   Post,
+  Res,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -52,9 +53,19 @@ export class UsersController {
     return await this.usersService.createBadge(dto.email);
   }
 
-  @Get('/badge:userId')
+  @Get('/badge/:userId')
   @UseGuards(JwtAuthGuard)
-  async getBadge(@Param('userId') userId: number) {
-    return await this.usersService.getBadge(userId);
+  async getBadge(
+    @Param('userId') userId: number,
+    @Res({ passthrough: true }) res,
+  ) {
+    const buffer = await this.usersService.getBadge(userId);
+    res.set({
+      'Content-Type': 'application/pdf',
+      'Content-Disposition': 'attachment; filename=example.pdf',
+      'Content-Length': buffer.length,
+    });
+
+    res.end(buffer);
   }
 }

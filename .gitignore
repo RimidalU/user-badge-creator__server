@@ -1,7 +1,7 @@
 # compiled output
-/dist
-/node_modules
-/uploads
+dist/
+/nestjs-app/node_modules
+/nestjs-app/uploads
 .vscode/
 .env
 

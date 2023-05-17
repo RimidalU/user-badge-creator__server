@@ -19,4 +19,6 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
   password: string;
 
   pdf: Buffer;
+
+  image: string;
 }

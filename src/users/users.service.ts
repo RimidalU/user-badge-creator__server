@@ -18,9 +18,12 @@ export class UsersService {
   }
 
   async findById(id: number) {
-    return await this.repository.findOneBy({
+    const user = await this.repository.findOneBy({
       id,
     });
+
+    const { pdf, ...rest } = user;
+    return rest;
   }
 
   async findByEmail(email: string) {
@@ -69,7 +72,9 @@ export class UsersService {
   }
 
   async getBadge(userId: number) {
-    const user = await this.findById(userId);
+    const { email } = await this.findById(userId);
+    const user = await this.findByEmail(email);
+
     const userBadge = user.pdf;
     return userBadge;
   }

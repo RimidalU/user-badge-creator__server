@@ -5,7 +5,8 @@ import * as express from 'express';
 import { AppModule } from './app.module';
 import { join } from 'path';
 
-const PORT = process.env.PORT || 5000;
+// const PORT = process.env.PORT || 5000;
+const PORT = process.env.NESTJS_APP_DOCKER_PORT;
 
 async function bootstrap() {
   try {
@@ -28,6 +29,12 @@ async function bootstrap() {
     });
 
     await app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+
+    // This is necessary to make the hot-reload work with Docker
+    if (module.hot) {
+      module.hot.accept();
+      module.hot.dispose(() => app.close());
+    }
   } catch (error) {
     console.log(error);
   }

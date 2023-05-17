@@ -158,7 +158,7 @@ module.exports = function (updatedModules, renewedModules) {
 
 /***/ }),
 /* 3 */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ ((module, exports, __webpack_require__) => {
 
 "use strict";
 
@@ -168,7 +168,7 @@ const swagger_1 = __webpack_require__(5);
 const express = __webpack_require__(6);
 const app_module_1 = __webpack_require__(7);
 const path_1 = __webpack_require__(18);
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.NESTJS_APP_DOCKER_PORT;
 async function bootstrap() {
     try {
         const app = await core_1.NestFactory.create(app_module_1.AppModule, { cors: false });
@@ -187,6 +187,10 @@ async function bootstrap() {
             },
         });
         await app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+        if (true) {
+            module.hot.accept();
+            module.hot.dispose(() => app.close());
+        }
     }
     catch (error) {
         console.log(error);
@@ -251,7 +255,7 @@ AppModule = __decorate([
                 type: 'mysql',
                 host: process.env.DB_HOST,
                 port: Number(process.env.DB_PORT) || 3306,
-                username: process.env.DB_USERNAME,
+                username: process.env.DB_USER,
                 password: process.env.DB_PASSWORD,
                 database: process.env.DB_DATABASE,
                 entities: [user_entity_1.UserEntity],
@@ -526,7 +530,7 @@ __decorate([
     __metadata("design:type", String)
 ], UserEntity.prototype, "password", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ default: '' }),
     __metadata("design:type", String)
 ], UserEntity.prototype, "image", void 0);
 __decorate([
@@ -813,6 +817,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var _a;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.CreateUserDto = void 0;
 const swagger_1 = __webpack_require__(5);
@@ -842,6 +847,12 @@ __decorate([
     }),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "password", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        default: '',
+    }),
+    __metadata("design:type", typeof (_a = typeof Buffer !== "undefined" && Buffer) === "function" ? _a : Object)
+], CreateUserDto.prototype, "pdf", void 0);
 exports.CreateUserDto = CreateUserDto;
 
 
@@ -1590,7 +1601,7 @@ module.exports = require("passport-jwt");
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("ab9a66351882fa8eba3d")
+/******/ 		__webpack_require__.h = () => ("e33a309f379c7bee2547")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */

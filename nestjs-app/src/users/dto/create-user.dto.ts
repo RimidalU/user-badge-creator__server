@@ -20,4 +20,9 @@ export class CreateUserDto {
     default: '12345',
   })
   password: string;
+
+  @ApiProperty({
+    default: '',
+  })
+  pdf: Buffer;
 }

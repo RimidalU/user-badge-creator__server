@@ -41,6 +41,13 @@ Database with authorization and with the ability to add, delete and edit employe
 - Once the dependencies are installed, you can run ```yarn dev``` or ```npm dev``` to start the application.
 - Enjoy.
 
+> ### ```dockerized``` branche: 
+> - Clone this repo to your desktop.
+> - Install docker and docker-compose.
+> - Run ```docker-compose up``` for run project.
+> - Run ```docker-compose down``` for stop project.
+> - Enjoy.
+
 ## Features
 - CRUD with authorization.
 - Load images to server.
